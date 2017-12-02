@@ -1,20 +1,27 @@
 package mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities;
 
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.CykelScoreApplication;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     private Button btnStartCycling, btnViewRuns;
 
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
+    private FusedLocationService fls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,24 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        LocationCallback locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Location currentLocation = locationResult.getLastLocation();
+
+                Log.i("LocationResult", "lat:" + currentLocation.getLatitude() + ", long:" + currentLocation.getLongitude());
+                // TODO SAVE currentLocation TO DATABASE
+            }
+        };
+        fls = new FusedLocationService(this, locationCallback);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        fls.stop();
     }
 
     @Override

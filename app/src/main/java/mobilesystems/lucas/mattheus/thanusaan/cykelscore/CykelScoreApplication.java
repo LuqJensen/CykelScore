@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
 
 /**
  * Created by Thanusaan on 23-11-2017.
@@ -30,7 +36,6 @@ public class CykelScoreApplication extends Application {
     {
         Intent mainIntent = new Intent(getContext(), newIntent.getClass());
         oldIntent.startActivity(mainIntent);
-        oldIntent.finish();
     }
 
     public static void activityIntentSwitch(Activity newIntent, Activity oldIntent, int anim1, int anim2) {
