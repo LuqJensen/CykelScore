@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "CykelScore.db";
-    private static int DB_VERSION = 3;
+    private static int DB_VERSION = 4;
 
     public static String LOCATION_TABLE = "LOCATION";
     public static String ACTIVITY_TABLE = "ACTIVITY";
@@ -21,14 +21,15 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `latitude` REAL,\n" +
             "  `longitude` REAL,\n" +
             "  `timestamp` INTEGER,\n" +
-            "  `provider` TEXT\n" +
+            "  `routeid` INTEGER\n" +
             ");";
 
     private static String DB_ACTIVITY_CREATION = "CREATE TABLE IF NOT EXISTS `" + ACTIVITY_TABLE + "` (\n" +
             "  `id` INTEGER PRIMARY KEY,\n" +
             "  `activity` INTEGER,\n" +
             "  `confidence` INTEGER,\n" +
-            "  `timestamp` INTEGER\n" +
+            "  `timestamp` INTEGER,\n" +
+            "  `routeid` INTEGER\n" +
             ");";
 
 

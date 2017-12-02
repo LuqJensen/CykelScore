@@ -26,31 +26,28 @@ public class LocationDAO
         dbHelper = new DBHelper(context);
     }
 
-    public void saveLocation(Location location)
+    public void saveLocation(LocationMeasurement l)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("latitude", location.getLatitude());
-        contentValues.put("longitude", location.getLongitude());
-        contentValues.put("timestamp", location.getTime());
-        contentValues.put("provider", location.getProvider());
+        contentValues.put("latitude", l.getLatitude());
+        contentValues.put("longitude", l.getLongitude());
+        contentValues.put("timestamp", l.getTimestamp());
+        contentValues.put("routeid", l.getRouteId());
 
         db.insert(DBHelper.LOCATION_TABLE, null, contentValues);
     }
 
-    public List<Location> getAllLocations() throws ParseException {
+    public List<LocationMeasurement> getAllLocations() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor result = db.query(DBHelper.LOCATION_TABLE, new String[]{"latitude", "longitude", "timestamp", "provider"}, null, null, null, null, "id DESC");
-        List<Location> locations = new ArrayList<>();
+        Cursor result = db.query(DBHelper.LOCATION_TABLE, new String[]{"id", "latitude", "longitude", "timestamp", "routeid"}, null, null, null, null, "id DESC");
+        List<LocationMeasurement> locations = new ArrayList<>();
 
         while(result.moveToNext())
         {
-            Location l = new Location(result.getString(3));
-            l.setLatitude(result.getDouble(0));
-            l.setLongitude(result.getDouble(1));
-            l.setTime(result.getLong(2));
-            locations.add(l);
+            LocationMeasurement lm = new LocationMeasurement(result.getInt(0), result.getDouble(1), result.getDouble(2), result.getLong(3), result.getInt(4));
+            locations.add(lm);
         }
 
         return locations;

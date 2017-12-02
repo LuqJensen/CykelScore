@@ -34,7 +34,7 @@ public class ActivityRecognitionService extends IntentService {
 
     private void handleDetectedActivities(DetectedActivity activity) {
         Log.e("ActivityRecogition", "handledetectedactivites");
-        sendMessageToActivity(new ActivityMeasurement(System.currentTimeMillis() / 1000, activity.getType(), activity.getConfidence()));
+        sendMessageToActivity(new ActivityMeasurement(0, System.currentTimeMillis(), activity.getType(), activity.getConfidence(), 0));
     }
 
     private void sendMessageToActivity(ActivityMeasurement am) {

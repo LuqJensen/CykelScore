@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationResult;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.CykelScoreApplication;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationDAO;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationMeasurement;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -59,10 +60,11 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Location currentLocation = locationResult.getLastLocation();
+                Location l = locationResult.getLastLocation();
+                LocationMeasurement lm = new LocationMeasurement(0, l.getLatitude(), l.getLongitude(), l.getTime(), 0);
 
-                locationDAO.saveLocation(currentLocation);
-                Log.i("LocationResult", "lat:" + currentLocation.getLatitude() + ", long:" + currentLocation.getLongitude());
+                locationDAO.saveLocation(lm);
+                Log.i("LocationResult", "lat:" + l.getLatitude() + ", long:" + l.getLongitude());
                 // TODO SAVE currentLocation TO DATABASE
             }
         };

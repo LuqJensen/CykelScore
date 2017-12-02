@@ -7,15 +7,26 @@ import java.io.Serializable;
  */
 
 public class ActivityMeasurement implements Serializable {
-
+    private int id;
     private Long timeStamp;
     private int activityType;
     private int confidence;
+    private int routeId;
 
-    public ActivityMeasurement(Long timeStamp, int type, int confidence) {
+    public int getId() {
+        return id;
+    }
+
+    public int getRouteId() {
+        return routeId;
+    }
+
+    public ActivityMeasurement(int id, Long timeStamp, int activityType, int confidence, int routeId) {
+        this.id = id;
         this.timeStamp = timeStamp;
-        this.activityType = type;
+        this.activityType = activityType;
         this.confidence = confidence;
+        this.routeId = routeId;
     }
 
     public Long getTimeStamp() {
