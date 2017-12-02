@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities.MainMenuActivity">
+    tools:context="mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities.NewRunActivity">
 
     <LinearLayout
         android:layout_width="368dp"
@@ -14,17 +14,16 @@
         tools:layout_editor_absoluteY="8dp">
 
         <Button
-            android:id="@+id/btnStartCycling"
+            android:id="@+id/btnNewRoute"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start Cycling" />
+            android:layout_height="38dp"
+            android:text="New Route" />
 
-        <Button
-            android:id="@+id/btnViewRuns"
+        <ListView
+            android:id="@+id/lvRoutes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Runs" />
-
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -12,7 +12,7 @@ import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    private Button btnRecord;
+    private Button btnStartCycling, btnViewRuns;
 
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
 
@@ -28,11 +28,19 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
 
-        btnRecord = (Button) findViewById(R.id.btnRecord);
-        btnRecord.setOnClickListener(new View.OnClickListener() {
+        btnStartCycling = (Button) findViewById(R.id.btnStartCycling);
+        btnStartCycling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CykelScoreApplication.activityIntentSwitch(new RecordActivity(), MainMenuActivity.this);
+                CykelScoreApplication.activityIntentSwitch(new NewRunActivity(), MainMenuActivity.this);
+            }
+        });
+
+        btnViewRuns = (Button) findViewById(R.id.btnViewRuns);
+        btnViewRuns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CykelScoreApplication.activityIntentSwitch(new ViewRunsActivity(), MainMenuActivity.this);
             }
         });
 
