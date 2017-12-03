@@ -19,11 +19,106 @@
             android:layout_height="38dp"
             android:text="New Route" />
 
+        <LinearLayout
+            android:id="@+id/layoutNewRoute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Route Name" />
+
+            <EditText
+                android:id="@+id/inputRouteName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="From Latitude" />
+
+            <EditText
+                android:id="@+id/inputStartLat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="From Longtitude" />
+
+            <EditText
+                android:id="@+id/inputStartLong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To Latitude" />
+
+            <EditText
+                android:id="@+id/inputEndLat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To Longtitude" />
+
+            <EditText
+                android:id="@+id/inputEndLong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddRoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Add Route" />
+
+                <Button
+                    android:id="@+id/btnCancelRoute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+
         <ListView
             android:id="@+id/lvRoutes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
+
+        </ListView>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

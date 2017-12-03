@@ -11,14 +11,14 @@ public class LocationMeasurement implements Serializable {
     private double latitude;
     private double longitude;
     private long timestamp;
-    private int routeId;
+    private int runId;
 
-    public LocationMeasurement(int id, double latitude, double longitude, long timestamp, int routeId) {
+    public LocationMeasurement(int id, double latitude, double longitude, long timestamp, int runId) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.timestamp = timestamp;
-        this.routeId = routeId;
+        this.runId = runId;
     }
 
     public int getId() {
@@ -37,7 +37,7 @@ public class LocationMeasurement implements Serializable {
         return timestamp;
     }
 
-    public int getRouteId() {
-        return routeId;
+    public int getRunId() {
+        return runId;
     }
 }

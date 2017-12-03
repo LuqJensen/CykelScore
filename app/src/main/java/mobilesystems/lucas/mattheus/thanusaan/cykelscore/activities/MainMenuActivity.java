@@ -23,8 +23,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button btnStartCycling, btnViewRuns;
 
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
-    private FusedLocationService fls;
-    private LocationDAO locationDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,29 +51,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 CykelScoreApplication.activityIntentSwitch(new ViewRunsActivity(), MainMenuActivity.this);
             }
         });
-
-        locationDAO = new LocationDAO(this);
-
-        LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                Location l = locationResult.getLastLocation();
-                LocationMeasurement lm = new LocationMeasurement(0, l.getLatitude(), l.getLongitude(), l.getTime(), 0);
-
-                locationDAO.saveLocation(lm);
-                Log.i("LocationResult", "lat:" + l.getLatitude() + ", long:" + l.getLongitude());
-                // TODO SAVE currentLocation TO DATABASE
-            }
-        };
-        fls = new FusedLocationService(this, locationCallback);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        fls.stop();
     }
 
     @Override

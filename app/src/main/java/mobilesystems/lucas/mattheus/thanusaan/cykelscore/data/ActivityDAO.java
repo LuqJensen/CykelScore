@@ -30,14 +30,14 @@ public class ActivityDAO {
         contentValues.put("activity", activity.getActivityType());
         contentValues.put("confidence", activity.getConfidence());
         contentValues.put("timestamp", activity.getTimeStamp());
-        contentValues.put("routeid", activity.getRouteId());
+        contentValues.put("runid", activity.getRunId());
 
         db.insert(DBHelper.ACTIVITY_TABLE, null, contentValues);
     }
 
     public List<ActivityMeasurement> getAllActivities() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor result = db.query(DBHelper.ACTIVITY_TABLE, new String[]{"id", "activity", "confidence", "timestamp", "routeid"}, null, null, null, null, "id DESC");
+        Cursor result = db.query(DBHelper.ACTIVITY_TABLE, new String[]{"id", "activity", "confidence", "timestamp", "runid"}, null, null, null, null, "id DESC");
         List<ActivityMeasurement> activities = new ArrayList<>();
 
         while(result.moveToNext())

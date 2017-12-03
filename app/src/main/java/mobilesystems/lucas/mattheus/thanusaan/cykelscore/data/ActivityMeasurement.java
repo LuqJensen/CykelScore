@@ -11,24 +11,27 @@ public class ActivityMeasurement implements Serializable {
     private Long timeStamp;
     private int activityType;
     private int confidence;
-    private int routeId;
+    private int runId;
+
+    public ActivityMeasurement(int id, Long timeStamp, int activityType, int confidence, int runId) {
+        this.id = id;
+        this.timeStamp = timeStamp;
+        this.activityType = activityType;
+        this.confidence = confidence;
+        this.runId = runId;
+    }
+
 
     public int getId() {
         return id;
     }
 
-    public int getRouteId() {
-        return routeId;
+    public int getRunId() {
+        return runId;
     }
-
-    public ActivityMeasurement(int id, Long timeStamp, int activityType, int confidence, int routeId) {
-        this.id = id;
-        this.timeStamp = timeStamp;
-        this.activityType = activityType;
-        this.confidence = confidence;
-        this.routeId = routeId;
+    public void setRunId(int runId) {
+        this.runId = runId;
     }
-
     public Long getTimeStamp() {
         return timeStamp;
     }

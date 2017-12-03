@@ -4,13 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,14 +30,14 @@ public class LocationDAO
         contentValues.put("latitude", l.getLatitude());
         contentValues.put("longitude", l.getLongitude());
         contentValues.put("timestamp", l.getTimestamp());
-        contentValues.put("routeid", l.getRouteId());
+        contentValues.put("runid", l.getRunId());
 
         db.insert(DBHelper.LOCATION_TABLE, null, contentValues);
     }
 
     public List<LocationMeasurement> getAllLocations() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor result = db.query(DBHelper.LOCATION_TABLE, new String[]{"id", "latitude", "longitude", "timestamp", "routeid"}, null, null, null, null, "id DESC");
+        Cursor result = db.query(DBHelper.LOCATION_TABLE, new String[]{"id", "latitude", "longitude", "timestamp", "runid"}, null, null, null, null, "id DESC");
         List<LocationMeasurement> locations = new ArrayList<>();
 
         while(result.moveToNext())
