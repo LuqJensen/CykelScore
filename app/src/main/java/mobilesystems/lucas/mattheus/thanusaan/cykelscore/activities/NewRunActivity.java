@@ -79,7 +79,8 @@ public class NewRunActivity extends AppCompatActivity {
         btnNewRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llNewRoute.setVisibility(View.VISIBLE);
+                //llNewRoute.setVisibility(View.VISIBLE);
+                CykelScoreApplication.activityIntentSwitch(new placePicker(), NewRunActivity.this);
             }
         });
 

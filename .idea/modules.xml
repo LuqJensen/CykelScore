@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CykelScore.iml" filepath="$PROJECT_DIR$/CykelScore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CykelScore.iml" filepath="$PROJECT_DIR$/.idea/CykelScore.iml" />
+      <module fileurl="file://B:\android_workspace\CykelScore\CykelScore.iml" filepath="B:\android_workspace\CykelScore\CykelScore.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
