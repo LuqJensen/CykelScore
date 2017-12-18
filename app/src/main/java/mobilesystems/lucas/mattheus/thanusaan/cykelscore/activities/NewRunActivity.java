@@ -11,12 +11,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.CykelScoreApplication;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Location;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Route;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RouteDAO;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Run;
@@ -24,14 +30,18 @@ import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RunDAO;
 
 public class NewRunActivity extends AppCompatActivity {
 
+    private static int PLACE_PICKER_REQUEST = 1;
     private Button btnNewRoute, btnAddRoute, btnCancelRoute;
-    private EditText inputRouteName, inputStartLat, inputStartLong, inputEndLat, inputEndLong;
+    private EditText inputRouteName, inputStartLoc, inputEndLoc;
     private LinearLayout llNewRoute;
     private ListView listRoutes;
     private ArrayList<Route> routes = new ArrayList<>();
     private ArrayAdapter<Route> adapter;
     private RouteDAO routeDAO;
     private RunDAO runDAO;
+    private Route newRoute;
+    private boolean isStartLoc;
+    private Location startLoc, endLoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +49,13 @@ public class NewRunActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_run);
 
         routeDAO = new RouteDAO(this);
-        runDAO= new RunDAO(this);
+        runDAO = new RunDAO(this);
 
         llNewRoute = (LinearLayout) findViewById(R.id.layoutNewRoute);
         inputRouteName = (EditText) findViewById(R.id.inputRouteName);
-        inputStartLat = (EditText) findViewById(R.id.inputStartLat);
-        inputStartLong = (EditText) findViewById(R.id.inputStartLong);
-        inputEndLat = (EditText) findViewById(R.id.inputEndLat);
-        inputEndLong = (EditText) findViewById(R.id.inputEndLong);
+        inputStartLoc = (EditText) findViewById(R.id.inputStartLoc);
+        inputEndLoc = (EditText) findViewById(R.id.inputEndLoc);
+
 
         listRoutes = (ListView) findViewById(R.id.lvRoutes);
         try {
@@ -67,7 +76,7 @@ public class NewRunActivity extends AppCompatActivity {
                 Intent mainIntent = new Intent(CykelScoreApplication.getContext(), new RecordActivity().getClass());
                 try {
                     run = runDAO.getlastRun();
-                    mainIntent.putExtra("run",(Serializable) run);
+                    mainIntent.putExtra("run", (Serializable) run);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -79,8 +88,24 @@ public class NewRunActivity extends AppCompatActivity {
         btnNewRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //llNewRoute.setVisibility(View.VISIBLE);
-                CykelScoreApplication.activityIntentSwitch(new placePicker(), NewRunActivity.this);
+                llNewRoute.setVisibility(View.VISIBLE);
+                //CykelScoreApplication.activityIntentSwitch(new placePicker(), NewRunActivity.this);
+            }
+        });
+
+        inputStartLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isStartLoc = true;
+                startPlacePickerActivity();
+            }
+        });
+
+        inputEndLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isStartLoc = false;
+                startPlacePickerActivity();
             }
         });
 
@@ -88,7 +113,7 @@ public class NewRunActivity extends AppCompatActivity {
         btnAddRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Route r = new Route(inputRouteName.getText().toString(), Integer.parseInt(inputStartLat.getText().toString()), Integer.parseInt(inputStartLong.getText().toString()), Integer.parseInt(inputEndLat.getText().toString()), Integer.parseInt(inputEndLong.getText().toString()));
+                Route r = new Route(inputRouteName.getText().toString(), startLoc, endLoc);
                 routeDAO.saveRoute(r);
                 try {
                     routes = new ArrayList<Route>(routeDAO.getAllRoutes());
@@ -98,7 +123,7 @@ public class NewRunActivity extends AppCompatActivity {
                 adapter.clear();
                 adapter.addAll(routes);
                 listRoutes = (ListView) findViewById(R.id.lvRoutes);
-                llNewRoute.setVisibility(View.INVISIBLE);
+                llNewRoute.setVisibility(View.GONE);
             }
         });
 
@@ -106,11 +131,44 @@ public class NewRunActivity extends AppCompatActivity {
         btnCancelRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llNewRoute.setVisibility(View.INVISIBLE);
+                llNewRoute.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void startPlacePickerActivity() {
+        com.google.android.gms.location.places.ui.PlacePicker.IntentBuilder builder = new com.google.android.gms.location.places.ui.PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+            displaySelectedPlaceFromPlacePicker(data);
 
+        }
+    }
+
+    private void displaySelectedPlaceFromPlacePicker(Intent data) {
+
+        Place place = com.google.android.gms.location.places.ui.PlacePicker.getPlace(this, data);
+        String name = place.getName().toString();
+        String address = place.getAddress().toString();
+        LatLng latlng = place.getLatLng();
+        Location loc = new Location(latlng.latitude, latlng.longitude);
+        if (isStartLoc) {
+            startLoc = loc;
+            inputStartLoc.setText(name);
+        } else {
+            endLoc = loc;
+            inputEndLoc.setText(name);
+        }
     }
 }

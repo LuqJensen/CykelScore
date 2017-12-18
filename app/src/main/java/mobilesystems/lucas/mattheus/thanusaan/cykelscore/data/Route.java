@@ -10,26 +10,20 @@ public class Route implements Serializable {
 
     private int id;
     private String name;
-    private double startLatitude;
-    private double startLongitude;
-    private double endLatitude;
-    private double endLongitude;
+    private Location startLocation;
+    private Location endLocation;
 
-    public Route(String name, double startLatitude, double startLongitude, double endLatitude, double endLongitude) {
+    public Route(String name, Location startLocation, Location endLocation) {
         this.name = name;
-        this.startLatitude = startLatitude;
-        this.startLongitude = startLongitude;
-        this.endLatitude = endLatitude;
-        this.endLongitude = endLongitude;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
     }
 
-    public Route(int id, String name, double startLatitude, double startLongitude, double endLatitude, double endLongitude) {
+    public Route(int id, String name, Location startLocation, Location endLocation) {
         this.id = id;
         this.name = name;
-        this.startLatitude = startLatitude;
-        this.startLongitude = startLongitude;
-        this.endLatitude = endLatitude;
-        this.endLongitude = endLongitude;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
     }
 
     public int getId() {
@@ -40,20 +34,12 @@ public class Route implements Serializable {
         return name;
     }
 
-    public double getStartLatitude() {
-        return startLatitude;
+    public Location getStartLocation() {
+        return startLocation;
     }
 
-    public double getStartLongitude() {
-        return startLongitude;
-    }
-
-    public double getEndLatitude() {
-        return endLatitude;
-    }
-
-    public double getEndLongitude() {
-        return endLongitude;
+    public Location getEndLocation() {
+        return endLocation;
     }
 
     @Override

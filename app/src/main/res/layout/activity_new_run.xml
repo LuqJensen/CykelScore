@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView2"
@@ -43,10 +43,10 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="From Latitude" />
+                android:text="Start Location" />
 
             <EditText
-                android:id="@+id/inputStartLat"
+                android:id="@+id/inputStartLoc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -56,36 +56,10 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="From Longtitude" />
+                android:text="End Location" />
 
             <EditText
-                android:id="@+id/inputStartLong"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="To Latitude" />
-
-            <EditText
-                android:id="@+id/inputEndLat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="To Longtitude" />
-
-            <EditText
-                android:id="@+id/inputEndLong"
+                android:id="@+id/inputEndLoc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

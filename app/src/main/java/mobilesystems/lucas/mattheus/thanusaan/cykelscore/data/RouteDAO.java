@@ -28,10 +28,10 @@ public class RouteDAO {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", route.getName());
-        contentValues.put("startLatitude", route.getStartLatitude());
-        contentValues.put("startLongitude", route.getStartLongitude());
-        contentValues.put("endLatitude", route.getEndLatitude());
-        contentValues.put("endLongitude", route.getEndLongitude());
+        contentValues.put("startLatitude", route.getStartLocation().getLatitude());
+        contentValues.put("startLongitude", route.getStartLocation().getLongitude());
+        contentValues.put("endLatitude", route.getEndLocation().getLongitude());
+        contentValues.put("endLongitude", route.getEndLocation().getLongitude());
 
         db.insert(DBHelper.ROUTE_TABLE, null, contentValues);
     }
@@ -43,7 +43,7 @@ public class RouteDAO {
 
         while(result.moveToNext())
         {
-            Route r = new Route(result.getInt(0), result.getString(1), result.getInt(2), result.getInt(3), result.getInt(4), result.getInt(5));
+            Route r = new Route(result.getInt(0), result.getString(1), new Location(result.getInt(2), result.getInt(3)), new Location(result.getInt(4), result.getInt(5)));
             routes.add(r);
         }
 
