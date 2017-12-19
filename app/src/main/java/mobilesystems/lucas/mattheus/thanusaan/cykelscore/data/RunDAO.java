@@ -56,5 +56,15 @@ public class RunDAO {
         return null;
     }
 
+    public void saveTimedRun(Run run)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time", run.getTime());
+
+        db.update(DBHelper.RUN_TABLE, contentValues, "id = ?", new String[]{run.getId() + ""});
+    }
+
 
 }

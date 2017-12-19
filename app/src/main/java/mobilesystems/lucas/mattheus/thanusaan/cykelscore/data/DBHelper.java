@@ -30,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static String DB_RUN_CREATION = "CREATE TABLE IF NOT EXISTS `" + RUN_TABLE + "` (\n" +
             "  `id` INTEGER PRIMARY KEY,\n" +
             "  `routeid` REAL\n" +
+            "  `time` INTEGER\n" +
             ");";
 
     private static String DB_LOCATION_CREATION = "CREATE TABLE IF NOT EXISTS `" + LOCATION_TABLE + "` (\n" +

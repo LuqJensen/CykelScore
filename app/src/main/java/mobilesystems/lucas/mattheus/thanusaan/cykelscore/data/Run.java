@@ -9,11 +9,14 @@ import java.io.Serializable;
 public class Run implements Serializable {
     private int id;
     private int routeId;
+    private long time;
 
     public Run(int id, int routeId) {
         this.id = id;
         this.routeId = id;
     }
+
+    public void setTime(long time) { this.time = time; }
 
     public int getId() {
         return id;
@@ -22,4 +25,6 @@ public class Run implements Serializable {
     public int getRouteId() {
         return routeId;
     }
+
+    public long getTime() { return time;}
 }

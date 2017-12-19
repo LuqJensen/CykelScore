@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,6 +36,7 @@ import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Run;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RunDAO;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.ActivityRecognitionService;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.Stopwatch;
 
 public class RecordActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -42,8 +46,17 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     private ArrayList<ActivityMeasurement> data;
     private ActivityDAO activityDAO;
     private Run run;
+    private RunDAO runDAO;
     private Button btnStart;
+    private TextView tvTime;
+    private Stopwatch stopwatch;
     private Context context;
+
+    final int MSG_START_TIMER = 0;
+    final int MSG_STOP_TIMER = 1;
+    final int MSG_UPDATE_TIMER = 2;
+
+    final int REFRESH_RATE = 100;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
 
@@ -93,15 +106,30 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
         data = new ArrayList<>();
         locationDAO = new LocationDAO(this);
         activityDAO = new ActivityDAO(this);
+        stopwatch = new Stopwatch();
 
 
+        runDAO = new RunDAO(this);
+
+        tvTime = (TextView) findViewById(R.id.tvTime);
 
         btnStart = (Button) findViewById(R.id.btnStartCycling);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fls = new FusedLocationService(context, locationCallback);
-                registerReceiver(receiver, new IntentFilter("ActivityUpdate"));
+                if (!stopwatch.isRunning())
+                {
+                    fls = new FusedLocationService(context, locationCallback);
+                    registerReceiver(receiver, new IntentFilter("ActivityUpdate"));
+                    mHandler.sendEmptyMessage(MSG_START_TIMER);
+                    btnStart.setText("Stop");
+                } else
+                {
+                    mHandler.sendEmptyMessage(MSG_STOP_TIMER);
+                    run.setTime(stopwatch.getElapsedTime());
+                    runDAO.saveRun(run);
+                }
+
             }
         });
     }
@@ -140,4 +168,30 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    Handler mHandler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_START_TIMER:
+                    stopwatch.start(); //start timer
+                    mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);
+                    break;
+                case MSG_UPDATE_TIMER:
+                    tvTime.setText(""+ stopwatch.getElapsedTime());
+                    mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIMER,100); //text view is updated every second,
+                    break;                                  //though the timer is still running
+                case MSG_STOP_TIMER:
+                    mHandler.removeMessages(MSG_UPDATE_TIMER); // no more updates.
+                    stopwatch.stop();//stop timer
+                    tvTime.setText(""+ stopwatch.getElapsedTime());
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
 }
