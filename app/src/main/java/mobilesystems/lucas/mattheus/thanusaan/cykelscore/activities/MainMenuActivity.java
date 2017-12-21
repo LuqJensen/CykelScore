@@ -1,22 +1,14 @@
 package mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities;
 
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.CykelScoreApplication;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationDAO;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationMeasurement;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -40,7 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
         btnStartCycling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CykelScoreApplication.activityIntentSwitch(new NewRunActivity(), MainMenuActivity.this);
+                CykelScoreApplication.activityIntentSwitch(new NewTripActivity(), MainMenuActivity.this);
             }
         });
 
@@ -48,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
         btnViewRuns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CykelScoreApplication.activityIntentSwitch(new ViewRunsActivity(), MainMenuActivity.this);
+                CykelScoreApplication.activityIntentSwitch(new ViewTripsActivity(), MainMenuActivity.this);
             }
         });
     }

@@ -25,10 +25,10 @@ import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Location;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Route;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RouteDAO;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Run;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RunDAO;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Trip;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.TripDAO;
 
-public class NewRunActivity extends AppCompatActivity {
+public class NewTripActivity extends AppCompatActivity {
 
     private static int PLACE_PICKER_REQUEST = 1;
     private Button btnNewRoute, btnAddRoute, btnCancelRoute;
@@ -38,7 +38,7 @@ public class NewRunActivity extends AppCompatActivity {
     private ArrayList<Route> routes = new ArrayList<>();
     private ArrayAdapter<Route> adapter;
     private RouteDAO routeDAO;
-    private RunDAO runDAO;
+    private TripDAO tripDAO;
     private Route newRoute;
     private boolean isStartLoc;
     private Location startLoc, endLoc;
@@ -46,10 +46,10 @@ public class NewRunActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_run);
+        setContentView(R.layout.activity_new_trip);
 
         routeDAO = new RouteDAO(this);
-        runDAO = new RunDAO(this);
+        tripDAO = new TripDAO(this);
 
         llNewRoute = (LinearLayout) findViewById(R.id.layoutNewRoute);
         inputRouteName = (EditText) findViewById(R.id.inputRouteName);
@@ -71,16 +71,16 @@ public class NewRunActivity extends AppCompatActivity {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Route r = (Route) listRoutes.getItemAtPosition(position);
-                runDAO.saveRun(new Run(0, r.getId()));
-                Run run;
-                Intent mainIntent = new Intent(CykelScoreApplication.getContext(), new RecordActivity().getClass());
+                tripDAO.saveRun(new Trip(0, r.getId()));
+                Trip trip;
+                Intent mainIntent = new Intent(CykelScoreApplication.getContext(), new TripActivity().getClass());
                 try {
-                    run = runDAO.getlastRun();
-                    mainIntent.putExtra("run", (Serializable) run);
+                    trip = tripDAO.getlastRun();
+                    mainIntent.putExtra("trip", (Serializable) trip);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                NewRunActivity.this.startActivity(mainIntent);
+                NewTripActivity.this.startActivity(mainIntent);
             }
         });
 
@@ -89,7 +89,7 @@ public class NewRunActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 llNewRoute.setVisibility(View.VISIBLE);
-                //CykelScoreApplication.activityIntentSwitch(new placePicker(), NewRunActivity.this);
+                //CykelScoreApplication.activityIntentSwitch(new placePicker(), NewTripActivity.this);
             }
         });
 

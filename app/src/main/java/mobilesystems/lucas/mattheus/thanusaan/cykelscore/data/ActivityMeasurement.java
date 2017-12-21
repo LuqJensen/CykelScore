@@ -11,14 +11,14 @@ public class ActivityMeasurement implements Serializable {
     private Long timeStamp;
     private int activityType;
     private int confidence;
-    private int runId;
+    private int tripId;
 
-    public ActivityMeasurement(int id, Long timeStamp, int activityType, int confidence, int runId) {
+    public ActivityMeasurement(int id, Long timeStamp, int activityType, int confidence, int tripId) {
         this.id = id;
         this.timeStamp = timeStamp;
         this.activityType = activityType;
         this.confidence = confidence;
-        this.runId = runId;
+        this.tripId = tripId;
     }
 
 
@@ -26,11 +26,11 @@ public class ActivityMeasurement implements Serializable {
         return id;
     }
 
-    public int getRunId() {
-        return runId;
+    public int getTripId() {
+        return tripId;
     }
-    public void setRunId(int runId) {
-        this.runId = runId;
+    public void setTripId(int tripId) {
+        this.tripId = tripId;
     }
     public Long getTimeStamp() {
         return timeStamp;

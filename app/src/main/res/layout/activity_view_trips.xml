@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities.ViewRunsActivity">
+    tools:context="mobilesystems.lucas.mattheus.thanusaan.cykelscore.activities.ViewTripsActivity">
 
 </android.support.constraint.ConstraintLayout>

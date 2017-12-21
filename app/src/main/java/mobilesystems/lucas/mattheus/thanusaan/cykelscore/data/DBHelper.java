@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static int DB_VERSION = 6;
 
     public static String ROUTE_TABLE = "ROUTE";
-    public static String RUN_TABLE = "RUN";
+    public static String TRIP_TABLE = "TRIP";
     public static String LOCATION_TABLE = "LOCATION";
     public static String ACTIVITY_TABLE = "ACTIVITY";
 
@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `endLongitude` REAL\n" +
             ");";
 
-    private static String DB_RUN_CREATION = "CREATE TABLE IF NOT EXISTS `" + RUN_TABLE + "` (\n" +
+    private static String DB_TRIP_CREATION = "CREATE TABLE IF NOT EXISTS `" + TRIP_TABLE + "` (\n" +
             "  `id` INTEGER PRIMARY KEY,\n" +
             "  `routeid` REAL\n" +
             "  `time` INTEGER\n" +
@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `latitude` REAL,\n" +
             "  `longitude` REAL,\n" +
             "  `timestamp` INTEGER,\n" +
-            "  `runid` INTEGER\n" +
+            "  `tripid` INTEGER\n" +
             ");";
 
     private static String DB_ACTIVITY_CREATION = "CREATE TABLE IF NOT EXISTS `" + ACTIVITY_TABLE + "` (\n" +
@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "  `activity` INTEGER,\n" +
             "  `confidence` INTEGER,\n" +
             "  `timestamp` INTEGER,\n" +
-            "  `runid` INTEGER\n" +
+            "  `tripid` INTEGER\n" +
             ");";
 
 
@@ -58,7 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.i("TABLE", "CREATE");
         db.execSQL(DB_ROUTE_CREATION);
-        db.execSQL(DB_RUN_CREATION);
+        db.execSQL(DB_TRIP_CREATION);
         db.execSQL(DB_LOCATION_CREATION);
         db.execSQL(DB_ACTIVITY_CREATION);
     }

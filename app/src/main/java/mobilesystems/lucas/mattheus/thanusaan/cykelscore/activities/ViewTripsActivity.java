@@ -5,12 +5,12 @@ import android.os.Bundle;
 
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
 
-public class ViewRunsActivity extends AppCompatActivity {
+public class ViewTripsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_runs);
+        setContentView(R.layout.activity_view_trips);
 
     }
 }

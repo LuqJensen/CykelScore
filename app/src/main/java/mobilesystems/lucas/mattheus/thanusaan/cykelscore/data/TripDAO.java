@@ -13,57 +13,57 @@ import java.util.List;
  * Created by Thanusaan on 03-12-2017.
  */
 
-public class RunDAO {
+public class TripDAO {
 
     private DBHelper dbHelper;
 
-    public RunDAO(Context context)
+    public TripDAO(Context context)
     {
         dbHelper = new DBHelper(context);
     }
 
-    public void saveRun(Run run)
+    public void saveRun(Trip trip)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("routeId", run.getRouteId());
+        contentValues.put("routeId", trip.getRouteId());
 
         db.insert(DBHelper.RUN_TABLE, null, contentValues);
     }
 
-    public List<Run> getAllRuns() throws ParseException {
+    public List<Trip> getAllRuns() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor result = db.query(DBHelper.RUN_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
-        List<Run> runs= new ArrayList<>();
+        List<Trip> trips = new ArrayList<>();
 
         while(result.moveToNext())
         {
-            Run r = new Run(result.getInt(0), result.getInt(1));
-            runs.add(r);
+            Trip r = new Trip(result.getInt(0), result.getInt(1));
+            trips.add(r);
         }
 
-        return runs;
+        return trips;
     }
 
-    public Run getlastRun() throws ParseException {
+    public Trip getlastRun() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor result = db.query(DBHelper.RUN_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
         if (result.moveToFirst())
         {
-            return(new Run(result.getInt(0), result.getInt(1)));
+            return(new Trip(result.getInt(0), result.getInt(1)));
         }
         return null;
     }
 
-    public void saveTimedRun(Run run)
+    public void saveTimedRun(Trip trip)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("time", run.getTime());
+        contentValues.put("time", trip.getTime());
 
-        db.update(DBHelper.RUN_TABLE, contentValues, "id = ?", new String[]{run.getId() + ""});
+        db.update(DBHelper.RUN_TABLE, contentValues, "id = ?", new String[]{trip.getId() + ""});
     }
 
 

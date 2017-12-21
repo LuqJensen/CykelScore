@@ -30,7 +30,7 @@ public class ActivityDAO {
         contentValues.put("activity", activity.getActivityType());
         contentValues.put("confidence", activity.getConfidence());
         contentValues.put("timestamp", activity.getTimeStamp());
-        contentValues.put("runid", activity.getRunId());
+        contentValues.put("runid", activity.getTripId());
 
         db.insert(DBHelper.ACTIVITY_TABLE, null, contentValues);
     }

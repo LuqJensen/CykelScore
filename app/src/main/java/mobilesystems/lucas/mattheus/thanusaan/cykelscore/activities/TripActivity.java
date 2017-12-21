@@ -24,29 +24,27 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.CykelScoreApplication;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.R;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.ActivityDAO;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.ActivityMeasurement;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationDAO;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.LocationMeasurement;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Run;
-import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.RunDAO;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.Trip;
+import mobilesystems.lucas.mattheus.thanusaan.cykelscore.data.TripDAO;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.ActivityRecognitionService;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.FusedLocationService;
 import mobilesystems.lucas.mattheus.thanusaan.cykelscore.services.Stopwatch;
 
-public class RecordActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class TripActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public GoogleApiClient mApiClient;
     private FusedLocationService fls;
     private LocationDAO locationDAO;
     private ArrayList<ActivityMeasurement> data;
     private ActivityDAO activityDAO;
-    private Run run;
-    private RunDAO runDAO;
+    private Trip trip;
+    private TripDAO tripDAO;
     private Button btnStart;
     private TextView tvTime;
     private Stopwatch stopwatch;
@@ -67,7 +65,7 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 ActivityMeasurement am = (ActivityMeasurement) bundle.getSerializable("ActivityMeasurement");
-                am.setRunId(run.getId());
+                am.setTripId(trip.getId());
                 activityDAO.saveActivity(am);
             }
         }
@@ -89,7 +87,7 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+        setContentView(R.layout.activity_trip);
 
         mApiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
@@ -100,8 +98,8 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
         mApiClient.connect();
         context = this;
 
-        run = (Run) getIntent().getExtras().getSerializable("run");
-        Log.e("Record", "routeId: " + run.getRouteId() + " RunId: " + run.getId());
+        trip = (Trip) getIntent().getExtras().getSerializable("trip");
+        Log.e("Record", "routeId: " + trip.getRouteId() + " RunId: " + trip.getId());
 
         data = new ArrayList<>();
         locationDAO = new LocationDAO(this);
@@ -109,7 +107,7 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
         stopwatch = new Stopwatch();
 
 
-        runDAO = new RunDAO(this);
+        tripDAO = new TripDAO(this);
 
         tvTime = (TextView) findViewById(R.id.tvTime);
 
@@ -126,8 +124,8 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
                 } else
                 {
                     mHandler.sendEmptyMessage(MSG_STOP_TIMER);
-                    run.setTime(stopwatch.getElapsedTime());
-                    runDAO.saveRun(run);
+                    trip.setTime(stopwatch.getElapsedTime());
+                    tripDAO.saveRun(trip);
                 }
 
             }

@@ -27,13 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RecordActivity" />
+        <activity android:name=".activities.TripActivity" />
 
         <service android:name=".services.ActivityRecognitionService" />
 
-        <activity android:name=".activities.ViewRunsActivity" />
-        <activity android:name=".activities.NewRunActivity"></activity>
-        <activity android:name=".activities.placePicker"/>
+        <activity android:name=".activities.ViewTripsActivity" />
+        <activity android:name=".activities.NewTripActivity"></activity>
     </application>
 
 </manifest>
