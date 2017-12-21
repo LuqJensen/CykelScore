@@ -29,12 +29,12 @@ public class TripDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("routeId", trip.getRouteId());
 
-        db.insert(DBHelper.RUN_TABLE, null, contentValues);
+        db.insert(DBHelper.TRIP_TABLE, null, contentValues);
     }
 
     public List<Trip> getAllRuns() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor result = db.query(DBHelper.RUN_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
+        Cursor result = db.query(DBHelper.TRIP_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
         List<Trip> trips = new ArrayList<>();
 
         while(result.moveToNext())
@@ -48,7 +48,7 @@ public class TripDAO {
 
     public Trip getlastRun() throws ParseException {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor result = db.query(DBHelper.RUN_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
+        Cursor result = db.query(DBHelper.TRIP_TABLE, new String[]{"id", "routeId"}, null, null, null, null, "id DESC");
         if (result.moveToFirst())
         {
             return(new Trip(result.getInt(0), result.getInt(1)));
@@ -63,7 +63,7 @@ public class TripDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("time", trip.getTime());
 
-        db.update(DBHelper.RUN_TABLE, contentValues, "id = ?", new String[]{trip.getId() + ""});
+        db.update(DBHelper.TRIP_TABLE, contentValues, "id = ?", new String[]{trip.getId() + ""});
     }
 
 
